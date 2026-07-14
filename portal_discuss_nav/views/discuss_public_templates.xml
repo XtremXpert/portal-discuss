@@ -1,0 +1,34 @@
+<odoo>
+    <!-- Pattern from diverse-cité: the public Discuss page is a
+         standalone full-screen document with no navigation. Inject a
+         fixed return bar for logged-in users and shift the Discuss app
+         below it. Target and label come from system parameters:
+         portal_discuss.nav_url (default /my) and
+         portal_discuss.nav_label (default "Retour"). -->
+    <template
+        id="discuss_public_nav_bar"
+        inherit_id="mail.discuss_public_channel_template"
+        name="Discuss public: portal return bar"
+    >
+        <xpath expr="//head" position="inside">
+            <style t-if="not request.env.user._is_public()">
+                .o-pd-nav { position: fixed; top: 0; left: 0; right: 0; height: 46px;
+                    z-index: 2000; background: var(--o-pd-nav-bg, #14504d);
+                    display: flex; align-items: center; padding: 0 16px;
+                    font-family: system-ui, sans-serif; }
+                .o-pd-nav a { color: #fff; text-decoration: none;
+                    font-size: 1.05rem; font-weight: 600; }
+                .o-pd-nav a:hover { text-decoration: underline; }
+                .o-main-components-container { top: 46px !important;
+                    height: calc(100% - 46px) !important; }
+            </style>
+        </xpath>
+        <xpath expr="//body/t[@t-out]" position="before">
+            <div class="o-pd-nav" t-if="not request.env.user._is_public()">
+                <a t-att-href="request.env['ir.config_parameter'].sudo().get_param('portal_discuss.nav_url', '/my')">
+                    ← <t t-out="request.env['ir.config_parameter'].sudo().get_param('portal_discuss.nav_label', 'Retour')" />
+                </a>
+            </div>
+        </xpath>
+    </template>
+</odoo>
