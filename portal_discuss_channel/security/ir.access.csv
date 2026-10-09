@@ -1,0 +1,4 @@
+id,name,model_id,group_id/id,operation,domain
+ir_rule_discuss_channel_portal_member,discuss.channel: portal members access their channels,discuss.channel,base.group_portal,r,"[(""is_member"", ""="", True)]"
+ir_rule_discuss_channel_member_portal_read,discuss.channel.member: portal members read members of their channels,discuss.channel.member,base.group_portal,r,"[(""channel_id.is_member"", ""="", True)]"
+ir_rule_discuss_channel_member_portal_self,discuss.channel.member: portal members manage their own line,discuss.channel.member,base.group_portal,ud,"[(""is_self"", ""="", True), (""channel_id.is_member"", ""="", True)]"
